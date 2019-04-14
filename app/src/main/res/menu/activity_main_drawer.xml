@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/my"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/ic_menu_profile"
+            android:title="@string/nav_profile" />
+        <item
+            android:id="@+id/search"
+            android:icon="@drawable/ic_menu_search"
+            android:title="@string/nav_search" />
+        <item
+            android:id="@+id/issues"
+            android:icon="@drawable/ic_menu_issues"
+            android:title="@string/nav_issues" />
+    </group>
+
+    <group
+        android:id="@+id/repositories"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/my_repos"
+            android:icon="@drawable/ic_menu_repo"
+            android:title="@string/nav_my_repos" />
+        <item
+            android:id="@+id/starred_repos"
+            android:icon="@drawable/ic_menu_starred_repos"
+            android:title="@string/nav_starred_repos" />
+
+    </group>
+
+    <group android:id="@+id/add_info"
+        android:checkableBehavior="single">
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_menu_settings"
+        android:title="@string/nav_settings" />
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_menu_about"
+        android:title="@string/nav_about" />
+
+    </group>
+
+</menu>
