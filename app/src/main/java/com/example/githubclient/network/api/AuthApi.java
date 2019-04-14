@@ -6,6 +6,6 @@ import retrofit2.http.Header;
 
 public interface AuthApi {
 
-    @GET("user")
-     Call<> getToken(@Header("Authorisation") String token);
+    //@GET("user")
+     //Call<> getToken(@Header("Authorisation") String token);
 }

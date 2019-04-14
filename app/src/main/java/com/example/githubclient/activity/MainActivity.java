@@ -1,7 +1,9 @@
-package com.example.githubclient;
+package com.example.githubclient.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,14 +13,23 @@ import android.support.v7.widget.Toolbar;
 
 import android.view.MenuItem;
 
+import com.example.githubclient.R;
 import com.example.githubclient.activity.AboutActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPreferences = getSharedPreferences("authUser",MODE_PRIVATE);
+        if(!sharedPreferences.contains("kirya")){
+            startActivity(new Intent(this,LoginActivity.class));
+        }
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
