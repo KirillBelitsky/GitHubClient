@@ -12,17 +12,17 @@ public class UserSession {
     private SharedPreferences preferences;
 
     public UserSession(Context context) {
-        this.preferences = context.getSharedPreferences("UserPreference",Context.MODE_MULTI_PROCESS);
+        this.preferences = context.getSharedPreferences("UserPreference",Context.MODE_PRIVATE);
     }
 
-    void saveCredentials(String username, String token){
+    public void saveCredentials(String username, String token){
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(USERNAME,username);
         editor.putString(TOKEN,token);
         editor.apply();
     }
 
-    private String createToken(String username,String password){
+    public String createToken(String username,String password){
         return Credentials.basic(username,password);
     }
 

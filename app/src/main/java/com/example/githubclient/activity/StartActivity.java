@@ -20,11 +20,11 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void process(){
-        if(userSession.isExist()){
-            startActivity(new Intent(this,MainActivity.class));
+        if(true){
+            startActivity(new Intent(this, MainActivity.class));
         }
         else
-            startActivity(new Intent(this,LoginActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
 
         finish();
     }
