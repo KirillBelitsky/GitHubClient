@@ -1,10 +1,10 @@
-package com.example.githubclient.activity;
+package com.example.githubclient.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.githubclient.session.UserSession;
+import com.example.githubclient.network.session.UserSession;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -20,7 +20,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void process(){
-        if(true){
+        if(userSession.isExist()){
             startActivity(new Intent(this, MainActivity.class));
         }
         else

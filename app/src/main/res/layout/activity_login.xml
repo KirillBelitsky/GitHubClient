@@ -11,7 +11,7 @@
     android:background="@color/colorViewLogin"
     android:gravity="center_horizontal"
     android:padding="@dimen/activity_margin"
-    tools:context="activity.LoginActivity">
+    tools:context=".ui.activity.LoginActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

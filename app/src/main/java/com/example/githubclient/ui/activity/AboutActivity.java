@@ -1,4 +1,4 @@
-package com.example.githubclient.activity;
+package com.example.githubclient.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,7 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.githubclient.R;
-import com.example.githubclient.network.NetworkService;
+import com.example.githubclient.network.model.User;
+import com.example.githubclient.network.service.NetworkService;
 import com.example.githubclient.network.model.Post;
 
 import retrofit2.Call;
@@ -22,23 +23,23 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_activity);
 
-        textView = (TextView) findViewById(R.id.textView2);
+        textView = findViewById(R.id.textView2);
 
         NetworkService.getInstance()
-                .getJSONApi()
-                .getPostWithID("KirillBelitsky")
-                .enqueue(new Callback<Post>() {
+                .getUserApi()
+                .getUserByLogin("KirillBelitsky")
+                .enqueue(new Callback<User>() {
                     @Override
-                    public void onResponse(@NonNull Call<Post> call, @NonNull Response<Post> response) {
-                        Post post = response.body();
+                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                        User user = response.body();
 
-                        textView.append(post.getId() + "\n");
-                        textView.append(post.getLogin()  + "\n");
-                        textView.append(post.getName() + "\n");
+                        textView.append(user.getId() + "\n");
+                        textView.append(user.getLogin()  + "\n");
+                        textView.append(user.getName() + "\n");
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<Post> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
 
                         textView.append("Error occurred while getting request!");
                         t.printStackTrace();

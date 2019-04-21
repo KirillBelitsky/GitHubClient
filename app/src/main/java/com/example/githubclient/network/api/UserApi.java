@@ -15,5 +15,5 @@ public interface UserApi {
     Call<User> login(@Header("Authorization") String token);
 
     @GET("/users/{name}")
-    Call<Post> getPostWithID(@Path("name") String name);
+    Call<User> getUserByLogin(@Path("name") String name);
 }

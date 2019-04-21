@@ -14,6 +14,14 @@
     <string name="user_name">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="view">View</string>
+    <string name="members">Members</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="repositories">Repositories</string>
+    <string name="gists">Gists</string>
+    <string name="organizations">Organizations</string>
 
 
 

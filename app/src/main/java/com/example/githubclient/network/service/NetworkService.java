@@ -1,4 +1,4 @@
-package com.example.githubclient.network;
+package com.example.githubclient.network.service;
 
 import com.example.githubclient.network.api.UserApi;
 
@@ -24,9 +24,7 @@ public class NetworkService {
         return mInstance;
     }
 
-    public UserApi getJSONApi() {
+    public UserApi getUserApi() {
         return mRetrofit.create(UserApi.class);
     }
-
-
 }
