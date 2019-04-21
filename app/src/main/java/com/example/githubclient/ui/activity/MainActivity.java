@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +19,7 @@ import com.example.githubclient.R;
 import com.example.githubclient.network.model.User;
 import com.example.githubclient.network.service.NetworkService;
 import com.example.githubclient.network.session.UserSession;
+import com.example.githubclient.ui.fragment.ProfileFragment;
 
 
 public class MainActivity extends AppCompatActivity
@@ -93,6 +95,10 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.profile:
+                startActivity(new Intent(this, ProfileActivity.class));
+                break;
+
+            case R.id.about:
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
                 break;
