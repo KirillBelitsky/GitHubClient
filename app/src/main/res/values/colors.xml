@@ -6,4 +6,14 @@
     <color name="colorViewLogin">#2d3035</color>
     <color name="colorViewLoginImageBackground">#01c853</color>
     <color name="colorViewLoginBack">#2d2f34</color>
+
+
+    <color name="gradStart">#63C9FF</color>
+    <color name="gradEnd">#67EFC8</color>
+    <color name="solidCircle">#80FFFFFF</color>
+    <color name="circleBorder">#30FFFFFF</color>
+    <color name="white">#FFFF</color>
+    <color name="followersBg">#65DCE5</color>
+    <color name="followingBg">#49BEFF</color>
+
 </resources>

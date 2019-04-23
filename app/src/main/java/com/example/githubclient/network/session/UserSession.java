@@ -53,7 +53,5 @@ public class UserSession {
         return preferences.contains(LOGIN);
     }
 
-    public String getLogin(){
-        return preferences.getString(LOGIN,"");
-    }
 }
+

@@ -8,8 +8,6 @@
         android:id="@+id/textView2"
         android:layout_width="300dp"
         android:layout_height="107dp"
-        android:text=""
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="247dp" />
+        android:text="" />
 </android.support.constraint.ConstraintLayout>
 

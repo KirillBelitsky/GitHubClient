@@ -17,15 +17,12 @@ public class ProfileActivity extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
 
         profileFragment = new ProfileFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.profile_container,profileFragment);
+        fragmentTransaction.commit();
 
-        if(findViewById(R.id.profile_container)!=null) {
-            fragmentManager.beginTransaction()
-                    .add(R.id.profile_container, profileFragment)
-                    .commit();
-        }else
-            System.out.println("kykykkykyky");
     }
 }

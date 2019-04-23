@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (user != null) {
                             userSession.saveCredentials(user, token);
+                            System.out.println(user.toString());
                             loginSuccesfull();
                         }
                     }

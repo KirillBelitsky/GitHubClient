@@ -13,36 +13,33 @@ import android.support.v7.widget.Toolbar;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.githubclient.R;
-import com.example.githubclient.network.model.User;
-import com.example.githubclient.network.service.NetworkService;
 import com.example.githubclient.network.session.UserSession;
 import com.example.githubclient.ui.fragment.ProfileFragment;
+
+import java.net.URI;
+
+import static com.example.githubclient.constants.Constants.LOGIN;
+import static com.example.githubclient.constants.Constants.USERNAME;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences preferences;
     private UserSession userSession;
-    TextView login;
-    private TextView name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        sharedPreferences = getSharedPreferences("authUser", MODE_PRIVATE);
-        userSession = new UserSession(getApplicationContext());
-
         setContentView(R.layout.activity_main);
 
-        login = findViewById(R.id.headerLogin);
-        name = (TextView) findViewById(R.id.textViewName);
+        preferences = getSharedPreferences("authUser",MODE_PRIVATE);
 
-        getUser();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,6 +50,11 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        System.out.println(preferences.getString(USERNAME,"") + "\n" + preferences.getString(LOGIN,""));
+        ((TextView)header.findViewById(R.id.headerName)).setText(preferences.getString(USERNAME,""));
+        ((TextView)header.findViewById(R.id.headerLogin)).setText(preferences.getString(LOGIN,""));
+        //((ImageView)header.findViewById(R.id.imageHeaderUser));
         navigationView.setNavigationItemSelectedListener(this);
 
     }
@@ -67,29 +69,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -108,24 +87,10 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(this, StartActivity.class));
                 break;
 
-            case R.id.settings:
-                login.append("dfgdfg");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    private void getUser() {
-
-        try{
-            System.out.println("1");
-            System.out.println(userSession.getLogin());
-            login.append("sdfg");
-        }catch (NullPointerException e){
-            System.out.println("MainActivity: Null exception!");
-        }
-    }
-
 }
