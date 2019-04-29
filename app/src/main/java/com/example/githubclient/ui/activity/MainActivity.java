@@ -4,34 +4,43 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.githubclient.R;
+import com.example.githubclient.model.Repository;
+import com.example.githubclient.network.response.AsyncResponse;
+import com.example.githubclient.network.service.StarredRepositoryService;
 import com.example.githubclient.network.session.UserSession;
-import com.example.githubclient.ui.fragment.ProfileFragment;
+import com.example.githubclient.ui.fragment.RepositoryFragment;
+import com.example.githubclient.util.parser.JsonParser;
 
-import java.net.URI;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static com.example.githubclient.constants.Constants.LOGIN;
 import static com.example.githubclient.constants.Constants.USERNAME;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, AsyncResponse {
 
     private SharedPreferences preferences;
     private UserSession userSession;
+    private Fragment repositoryFragment;
+    private RecyclerView recyclerView;
+    private StarredRepositoryService starredRepositoryService;
+    private String starredRepoJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,8 @@ public class MainActivity extends AppCompatActivity
 
         preferences = getSharedPreferences("authUser",MODE_PRIVATE);
         userSession = new UserSession(getApplicationContext());
+        starredRepositoryService = new StarredRepositoryService();
+        starredRepositoryService.delegate = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,6 +91,10 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
 
+            case R.id.starred_repos:
+                starredRepo();
+                break;
+
             case R.id.about:
                 break;
 
@@ -93,5 +108,31 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void starredRepo(){
+        this.repositoryFragment = new RepositoryFragment();
+
+        starredRepositoryService.execute(this.preferences.getString(LOGIN,""));
+        processFinish(starredRepoJson);
+
+        List<Repository> repositoryList = JsonParser.parseRepositories(starredRepoJson);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragment_container,repositoryFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void processFinish(String result) {
+        try{
+            this.starredRepoJson = starredRepositoryService.get();
+
+            System.out.println("11111" + starredRepoJson);
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
 }

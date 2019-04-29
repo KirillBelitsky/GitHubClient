@@ -1,9 +1,8 @@
 package com.example.githubclient.network.api;
 
-import com.example.githubclient.network.model.Repository;
+import com.example.githubclient.model.Repository;
 
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.GET;
 
 import java.util.List;

@@ -6,9 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.githubclient.R;
-import com.example.githubclient.network.model.User;
+import com.example.githubclient.model.User;
 import com.example.githubclient.network.service.NetworkService;
-import com.example.githubclient.network.model.Post;
 
 import retrofit2.Call;
 import retrofit2.Callback;

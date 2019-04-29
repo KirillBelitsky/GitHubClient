@@ -9,14 +9,12 @@ import android.view.View;
 
 import com.example.githubclient.R;
 import com.example.githubclient.network.service.NetworkService;
-import com.example.githubclient.network.model.User;
+import com.example.githubclient.model.User;
 import com.example.githubclient.network.session.UserSession;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.example.githubclient.constants.Constants.USERNAME;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -56,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (user != null) {
                             userSession.saveCredentials(user, token);
-                            System.out.println(user.toString());
                             loginSuccesfull();
                         }
                     }

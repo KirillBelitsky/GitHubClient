@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 import com.example.githubclient.R;
-import com.example.githubclient.network.model.User;
+import com.example.githubclient.model.User;
 import com.example.githubclient.network.response.AsyncResponse;
 import com.example.githubclient.network.service.UserService;
 import com.example.githubclient.ui.fragment.ProfileFragment;
@@ -42,11 +42,7 @@ public class ProfileActivity extends FragmentActivity implements AsyncResponse {
         processFinish(json);
         user = JsonParser.parseUser(json);
 
-        bundle.putString("username",user.getName());
-        bundle.putString("email",user.getEmail());
-        bundle.putString("company",user.getCompany());
-        bundle.putInt("following",user.getFollowing());
-        bundle.putInt("followers",user.getFollowers());
+        fillBundle();
 
         profileFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -64,5 +60,13 @@ public class ProfileActivity extends FragmentActivity implements AsyncResponse {
         }catch (ExecutionException e){
             e.printStackTrace();
         }
+    }
+
+    private void fillBundle(){
+        bundle.putString("username",user.getName());
+        bundle.putString("email",user.getEmail());
+        bundle.putString("company",user.getCompany());
+        bundle.putInt("following",user.getFollowing());
+        bundle.putInt("followers",user.getFollowers());
     }
 }

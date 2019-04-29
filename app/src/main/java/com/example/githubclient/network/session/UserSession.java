@@ -3,7 +3,7 @@ package com.example.githubclient.network.session;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.githubclient.network.model.User;
+import com.example.githubclient.model.User;
 
 import okhttp3.Credentials;
 

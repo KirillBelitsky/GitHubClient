@@ -1,4 +1,4 @@
-package com.example.githubclient.network.model;
+package com.example.githubclient.model;
 
 public class LoginModel {
     private String login;
