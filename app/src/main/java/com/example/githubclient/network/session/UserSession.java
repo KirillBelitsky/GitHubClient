@@ -21,12 +21,12 @@ public class UserSession {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(USERNAME,user.getName());
         editor.putString(LOGIN,user.getLogin());
-        editor.putInt(ID,user.getId());
-        editor.putString(EMAIL,user.getEmail());
-        editor.putInt(FOLLOWERS,user.getFollowers());
-        editor.putInt(FOLLOWING,user.getFollowing());
-        editor.putString(AVATAR_URL,user.getAvatarUrl());
-        editor.putString(COMPANY,user.getCompany());
+        ///editor.putInt(ID,user.getId());
+        //editor.putString(EMAIL,user.getEmail());
+        //editor.putInt(FOLLOWERS,user.getFollowers());
+        //editor.putInt(FOLLOWING,user.getFollowing());
+        //editor.putString(AVATAR_URL,user.getAvatarUrl());
+        //editor.putString(COMPANY,user.getCompany());
         editor.putString(TOKEN,token);
         editor.apply();
     }
@@ -39,12 +39,12 @@ public class UserSession {
         SharedPreferences.Editor editor = preferences.edit();
         editor.remove(USERNAME);
         editor.remove(LOGIN);
-        editor.remove(ID);
-        editor.remove(EMAIL);
-        editor.remove(FOLLOWERS);
-        editor.remove(FOLLOWING);
-        editor.remove(AVATAR_URL);
-        editor.remove(COMPANY);
+        //editor.remove(ID);
+        //editor.remove(EMAIL);
+        //editor.remove(FOLLOWERS);
+        //editor.remove(FOLLOWING);
+        //editor.remove(AVATAR_URL);
+       // editor.remove(COMPANY);
         editor.remove(TOKEN);
         editor.apply();
     }

@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         preferences = getSharedPreferences("authUser",MODE_PRIVATE);
+        userSession = new UserSession(getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,12 +75,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.profile:
-                startActivity(new Intent(this, ProfileActivity.class));
+                Intent intent = new Intent(this,ProfileActivity.class);
+                intent.putExtra(LOGIN,preferences.getString(LOGIN,""));
+                startActivity(intent);
                 break;
 
             case R.id.about:
-                Intent intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
                 break;
 
             case R.id.logout:

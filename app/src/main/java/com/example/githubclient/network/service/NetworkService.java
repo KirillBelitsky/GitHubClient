@@ -1,5 +1,6 @@
 package com.example.githubclient.network.service;
 
+import com.example.githubclient.network.api.RepoApi;
 import com.example.githubclient.network.api.UserApi;
 
 import retrofit2.Retrofit;
@@ -26,5 +27,9 @@ public class NetworkService {
 
     public UserApi getUserApi() {
         return mRetrofit.create(UserApi.class);
+    }
+
+    public RepoApi getRepoApi(){
+        return mRetrofit.create(RepoApi.class);
     }
 }
