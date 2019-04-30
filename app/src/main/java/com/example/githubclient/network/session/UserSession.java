@@ -25,7 +25,7 @@ public class UserSession {
         //editor.putString(EMAIL,user.getEmail());
         //editor.putInt(FOLLOWERS,user.getFollowers());
         //editor.putInt(FOLLOWING,user.getFollowing());
-        //editor.putString(AVATAR_URL,user.getAvatarUrl());
+        editor.putString(AVATAR_URL,user.getAvatarUrl());
         //editor.putString(COMPANY,user.getCompany());
         editor.putString(TOKEN,token);
         editor.apply();
@@ -43,7 +43,7 @@ public class UserSession {
         //editor.remove(EMAIL);
         //editor.remove(FOLLOWERS);
         //editor.remove(FOLLOWING);
-        //editor.remove(AVATAR_URL);
+        editor.remove(AVATAR_URL);
        // editor.remove(COMPANY);
         editor.remove(TOKEN);
         editor.apply();

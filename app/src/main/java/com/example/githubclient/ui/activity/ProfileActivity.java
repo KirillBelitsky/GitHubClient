@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 import static com.example.githubclient.constants.Constants.LOGIN;
 
-public class ProfileActivity extends FragmentActivity implements AsyncResponse {
+public class ProfileActivity extends FragmentActivity{
 
     private Fragment profileFragment;
     private String login;
@@ -33,17 +33,10 @@ public class ProfileActivity extends FragmentActivity implements AsyncResponse {
 
         bundle = new Bundle();
         profileFragment = new ProfileFragment();
-        userService = new UserService();
-        userService.delegate = this;
 
         login = getIntent().getStringExtra(LOGIN);
-        userService.execute(login);
 
-        processFinish(json);
-        user = JsonParser.parseUser(json);
-
-        fillBundle();
-
+        bundle.putString("login",login);
         profileFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.profile_container,profileFragment);
@@ -51,22 +44,4 @@ public class ProfileActivity extends FragmentActivity implements AsyncResponse {
 
     }
 
-    @Override
-    public void processFinish(String result) {
-        try {
-            this.json = userService.get();
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }catch (ExecutionException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void fillBundle(){
-        bundle.putString("username",user.getName());
-        bundle.putString("email",user.getEmail());
-        bundle.putString("company",user.getCompany());
-        bundle.putInt("following",user.getFollowing());
-        bundle.putInt("followers",user.getFollowers());
-    }
 }

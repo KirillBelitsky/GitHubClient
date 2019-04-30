@@ -8,9 +8,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.githubclient.R;
+import com.example.githubclient.model.User;
+import com.example.githubclient.network.service.NetworkService;
+import com.example.githubclient.util.circleTransform.CircularTransformation;
+import com.squareup.picasso.Picasso;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.githubclient.constants.Constants.FOLLOWERS;
 import static com.example.githubclient.constants.Constants.USERNAME;
@@ -22,6 +31,7 @@ public class ProfileFragment extends Fragment {
     private TextView following;
     private TextView email;
     private TextView company;
+    private ImageView profileImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +43,7 @@ public class ProfileFragment extends Fragment {
         following = (TextView)view.findViewById(R.id.profile_following);
         email = (TextView)view.findViewById(R.id.profile_email);
         company = (TextView)view.findViewById(R.id.profile_company);
+        profileImage = (ImageView) view.findViewById(R.id.profie_image);
 
         getDataFromBundle();
 
@@ -40,16 +51,24 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getDataFromBundle(){
-        try {
+        NetworkService.getInstance()
+                .getUserApi()
+                .getUserByLogin(getArguments().get("login").toString())
+                .enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        Picasso.with(getContext()).load(response.body().getAvatarUrl()).transform(new CircularTransformation()).into(profileImage);
+                        name.setText(response.body().getName());
+                        followers.setText(String.valueOf(response.body().getFollowers()));
+                        following.setText(String.valueOf(response.body().getFollowing()));
+                        email.setText(response.body().getEmail());
+                        company.setText(response.body().getCompany());
+                    }
 
-            name.setText(getArguments().getString("username"));
-            followers.setText(String.valueOf(getArguments().getInt("followers")));
-            following.setText(String.valueOf(getArguments().getInt("following")));
-            email.setText(getArguments().getString("email","empty"));
-            company.setText(getArguments().getString("company","empty"));
-
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
     }
 }
