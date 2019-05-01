@@ -119,10 +119,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void userRepo(){
-        Bundle bundle = new Bundle();
-        bundle.putString("login",preferences.getString(LOGIN,""));
-
-        repositoryFragment.setArguments(bundle);
 
     }
 }
