@@ -1,5 +1,6 @@
 package com.example.githubclient.ui.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,32 +11,36 @@ import android.widget.TextView;
 
 import com.example.githubclient.R;
 import com.example.githubclient.model.Repository;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RepositoryListAdater extends RecyclerView.Adapter<RepositoryListAdater.ViewHolder> {
+public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAdapter.ViewHolder> {
 
     private List<Repository> repositoryList;
+    private Context context;
 
-    public RepositoryListAdater(List<Repository> repositories){
+    public RepositoryListAdapter(Context context,List<Repository> repositories){
+        this.context = context;
         this.repositoryList = repositories;
     }
 
     @NonNull
     @Override
-    public RepositoryListAdater.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RepositoryListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_item_repository,viewGroup,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RepositoryListAdater.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RepositoryListAdapter.ViewHolder holder, int position) {
         Repository repository = repositoryList.get(position);
+        Picasso.with(context).load(repository.getOwner().getAvatarUrl()).into(holder.imageView);
         holder.nameView.setText(repository.getName());
         holder.languageView.setText(repository.getLanguage());
         holder.descriptionView.setText(repository.getDescription());
-        holder.starView.setText(repository.getStarCount());
-        holder.forkView.setText(repository.getForkCount());
+        holder.starView.setText(String.valueOf(repository.getStarCount()));
+        holder.forkView.setText(String.valueOf(repository.getForkCount()));
         holder.ownerView.setText(repository.getOwner().getLogin());
     }
 
