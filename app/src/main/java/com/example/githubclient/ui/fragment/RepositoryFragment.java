@@ -33,6 +33,7 @@ public class RepositoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_repository, container, false);
         mLayoutManager = new LinearLayoutManager(getActivity());
+
         getRepositories();
 
         return view;
@@ -68,5 +69,7 @@ public class RepositoryFragment extends Fragment {
                         call.cancel();
                     }
                 });
+
+
     }
 }

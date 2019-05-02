@@ -13,7 +13,9 @@
     <color name="solidCircle">#80FFFFFF</color>
     <color name="circleBorder">#30FFFFFF</color>
     <color name="white">#FFFF</color>
+    <color name="almostWhite">#F4F4F4</color>
     <color name="followersBg">#65DCE5</color>
     <color name="followingBg">#49BEFF</color>
+    <color name="rectangleBorder">#30FFFFFF</color>
 
 </resources>

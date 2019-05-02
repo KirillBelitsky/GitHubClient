@@ -38,6 +38,10 @@ public class User {
     @Expose
     private String company;
 
+    @SerializedName("public_repos")
+    @Expose
+    private int countRepo;
+
     public int getId() {
         return id;
     }
@@ -100,6 +104,14 @@ public class User {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public int getCountRepo() {
+        return countRepo;
+    }
+
+    public void setCountRepo(int countRepo) {
+        this.countRepo = countRepo;
     }
 
     @Override

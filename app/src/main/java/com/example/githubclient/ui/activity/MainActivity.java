@@ -84,6 +84,10 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
 
+            case R.id.issues:
+                issues();
+                break;
+
             case R.id.repositories:
                 userRepo();
                 break;
@@ -119,6 +123,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void userRepo(){
+
+    }
+
+    private void issues(){
 
     }
 }
