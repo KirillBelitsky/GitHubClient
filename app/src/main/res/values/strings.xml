@@ -25,6 +25,10 @@
     <string name="company">Company</string>
     <string name="email">Email</string>
     <string name="edit">Edit</string>
+    <string name="editName">Name:</string>
+    <string name="editEmail">Email:</string>
+    <string name="editCompany">Company:</string>
+    <string name="edit_form_action_save">Save</string>
 
 
 

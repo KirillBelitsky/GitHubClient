@@ -14,11 +14,16 @@ import android.widget.Toolbar;
 import com.example.githubclient.R;
 import com.example.githubclient.model.User;
 import com.example.githubclient.network.response.AsyncResponse;
+import com.example.githubclient.network.service.NetworkService;
 import com.example.githubclient.network.service.UserService;
 import com.example.githubclient.ui.fragment.ProfileFragment;
 import com.example.githubclient.util.parser.JsonParser;
 
 import java.util.concurrent.ExecutionException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.githubclient.constants.Constants.LOGIN;
 
@@ -55,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.profile_edit) {
-            Intent intent = new Intent(this, null);
+            Intent intent = new Intent(this, EditProfileActivity.class);
             startActivity(intent);
         }
         else if(item.getItemId() == android.R.id.home)
@@ -69,6 +74,5 @@ public class ProfileActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.profile_opp, menu);
         return true;
     }
-
 
 }

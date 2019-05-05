@@ -12,15 +12,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.view.MenuItem;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.githubclient.R;
+import com.example.githubclient.model.User;
+import com.example.githubclient.network.service.NetworkService;
 import com.example.githubclient.network.session.UserSession;
 import com.example.githubclient.ui.fragment.RepositoryFragment;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.githubclient.constants.Constants.AVATAR_URL;
 import static com.example.githubclient.constants.Constants.LOGIN;
@@ -61,8 +68,8 @@ public class MainActivity extends AppCompatActivity
         ((TextView)header.findViewById(R.id.headerName)).setText(preferences.getString(USERNAME,""));
         ((TextView)header.findViewById(R.id.headerLogin)).setText(preferences.getString(LOGIN,""));
         navigationView.setNavigationItemSelectedListener(this);
-
     }
+
 
     @Override
     public void onBackPressed() {

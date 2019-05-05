@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public synchronized void onLoginClick(View view) {
+    public void onLoginClick(View view) {
 
         final String token = userSession.createToken(mUsername.getText().toString(), mPassword.getText().toString());
 
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void loginSuccesfull(){
-        startActivity(new Intent(this,MainActivity.class));
+    private void loginSuccesfull() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

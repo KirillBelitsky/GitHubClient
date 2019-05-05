@@ -1,10 +1,13 @@
 package com.example.githubclient.network.api;
 
 import com.example.githubclient.model.User;
+import com.example.githubclient.model.UserDataEdit;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PATCH;
 import retrofit2.http.Path;
 
 public interface UserApi {
@@ -14,4 +17,10 @@ public interface UserApi {
 
     @GET("/users/{name}")
     Call<User> getUserByLogin(@Path("name") String name);
+
+    @PATCH("user")
+    Call<User> updateUser(@Body UserDataEdit user);
+
+    @GET("user")
+    Call<User> getCurrentUser();
 }
