@@ -12,22 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.view.MenuItem;
-import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.githubclient.R;
-import com.example.githubclient.model.User;
-import com.example.githubclient.network.service.NetworkService;
 import com.example.githubclient.network.session.UserSession;
-import com.example.githubclient.ui.fragment.RepositoryFragment;
+import com.example.githubclient.ui.fragment.IssueListFragment;
+import com.example.githubclient.ui.fragment.RepositoryListFragment;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.example.githubclient.constants.Constants.AVATAR_URL;
 import static com.example.githubclient.constants.Constants.LOGIN;
@@ -39,7 +33,8 @@ public class MainActivity extends AppCompatActivity
 
     private SharedPreferences preferences;
     private UserSession userSession;
-    private RepositoryFragment repositoryFragment;
+    private RepositoryListFragment repositoryFragment;
+    private IssueListFragment issuesListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +43,8 @@ public class MainActivity extends AppCompatActivity
 
         preferences = getSharedPreferences("authUser",MODE_PRIVATE);
         userSession = new UserSession(getApplicationContext());
-        repositoryFragment = new RepositoryFragment();
+        repositoryFragment = new RepositoryListFragment();
+        issuesListFragment = new IssueListFragment();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -120,7 +116,7 @@ public class MainActivity extends AppCompatActivity
 
     private void starredRepo(){
         Bundle bundle = new Bundle();
-        bundle.putString("login",preferences.getString(LOGIN,""));
+        bundle.putString(LOGIN,preferences.getString(LOGIN,""));
 
         repositoryFragment.setArguments(bundle);
 
@@ -134,6 +130,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void issues(){
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragment_container,issuesListFragment);
+        transaction.commit();
     }
 }

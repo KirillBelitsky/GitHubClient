@@ -1,5 +1,6 @@
 package com.example.githubclient.network.service;
 
+import com.example.githubclient.network.api.IssueApi;
 import com.example.githubclient.network.api.RepoApi;
 import com.example.githubclient.network.api.UserApi;
 
@@ -31,5 +32,9 @@ public class NetworkService {
 
     public RepoApi getRepoApi(){
         return mRetrofit.create(RepoApi.class);
+    }
+
+    public IssueApi getIssueApi(){
+        return mRetrofit.create(IssueApi.class);
     }
 }

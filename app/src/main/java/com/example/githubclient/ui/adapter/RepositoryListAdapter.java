@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.githubclient.R;
 import com.example.githubclient.model.Repository;
@@ -49,7 +50,7 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
         return repositoryList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView imageView;
         private final TextView nameView, descriptionView,languageView;
@@ -66,6 +67,10 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
             ownerView = (TextView) view.findViewById(R.id.tv_owner_name);
         }
 
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(context,"gdfg",Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

@@ -2,14 +2,11 @@ package com.example.githubclient.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.ActionBarContainer;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.githubclient.R;
@@ -22,6 +19,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.githubclient.constants.Constants.LOGIN;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -30,17 +29,15 @@ public class ProfileFragment extends Fragment {
     private TextView following;
     private TextView repo;
     private TextView email;
-    private TextView emailHeader;
+    private LinearLayout emailHeader;
     private TextView company;
-    private TextView companyHeader;
+    private LinearLayout companyHeader;
     private ImageView profileImage;
-    private Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        toolbar = (Toolbar) view.findViewById(R.id.profile_toolbar);
 
         name = view.findViewById(R.id.profile_username);
         followers = view.findViewById(R.id.profile_followers);
@@ -61,7 +58,7 @@ public class ProfileFragment extends Fragment {
     private void getDataFromBundle(){
         NetworkService.getInstance()
                 .getUserApi()
-                .getUserByLogin(getArguments().get("login").toString())
+                .getUserByLogin(getArguments().get(LOGIN).toString())
                 .enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
@@ -78,7 +75,8 @@ public class ProfileFragment extends Fragment {
 
                         if (response.body().getCompany() != null) {
                             companyHeader.setVisibility(View.VISIBLE);
-                            company.setText(response.body().getEmail());
+                            System.out.println("11111" + response.body().getCompany());
+                            company.setText(response.body().getCompany());
                         }
 
                     }

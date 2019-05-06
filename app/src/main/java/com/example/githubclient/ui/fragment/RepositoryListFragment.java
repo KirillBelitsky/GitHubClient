@@ -21,7 +21,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RepositoryFragment extends Fragment {
+import static com.example.githubclient.constants.Constants.LOGIN;
+
+public class RepositoryListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RepositoryListAdapter adapter;
@@ -31,8 +33,9 @@ public class RepositoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_repository, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_repository, container, false);
         mLayoutManager = new LinearLayoutManager(getActivity());
+        getActivity().setTitle("Starred repositories");
 
         getRepositories();
 
@@ -47,7 +50,7 @@ public class RepositoryFragment extends Fragment {
     private void getRepositories() {
         NetworkService.getInstance()
                 .getRepoApi()
-                .getStarredRepoByLogin(getArguments().getString("login"))
+                .getStarredRepoByLogin(getArguments().getString(LOGIN))
                 .enqueue(new Callback<List<Repository>>() {
                     @Override
                     public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {

@@ -19,8 +19,8 @@ public interface UserApi {
     Call<User> getUserByLogin(@Path("name") String name);
 
     @PATCH("user")
-    Call<User> updateUser(@Body UserDataEdit user);
+    Call<User> updateUser(@Header("Authorization") String token,@Body UserDataEdit user);
 
     @GET("user")
-    Call<User> getCurrentUser();
+    Call<User> getCurrentUser(@Header("Authorization") String token);
 }
