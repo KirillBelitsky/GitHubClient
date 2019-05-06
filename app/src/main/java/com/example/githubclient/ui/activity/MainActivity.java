@@ -23,8 +23,6 @@ import com.example.githubclient.ui.fragment.RepositoryListFragment;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
 
-import java.sql.SQLOutput;
-
 import static com.example.githubclient.constants.Constants.AVATAR_URL;
 import static com.example.githubclient.constants.Constants.LOGIN;
 import static com.example.githubclient.constants.Constants.USERNAME;
@@ -107,7 +105,7 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.logout:
                 userSession.invalidate();
-                startActivity(new Intent(this, StartActivity.class));
+                startActivity(new Intent(this, SplashActivity.class));
                 finish();
                 break;
 

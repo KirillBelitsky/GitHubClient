@@ -3,6 +3,8 @@ package com.example.githubclient.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 
 public class User {
 
@@ -41,6 +43,10 @@ public class User {
     @SerializedName("public_repos")
     @Expose
     private int countRepo;
+
+    @SerializedName("created_at")
+    @Expose
+    private Date date;
 
     public int getId() {
         return id;

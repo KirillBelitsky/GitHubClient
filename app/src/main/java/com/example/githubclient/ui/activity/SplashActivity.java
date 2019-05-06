@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.githubclient.network.session.UserSession;
 
-public class StartActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     private UserSession userSession;
 
