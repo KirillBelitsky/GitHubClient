@@ -1,5 +1,7 @@
 package com.example.githubclient.ui.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.githubclient.constants.Constants.LOGIN;
+import static com.example.githubclient.constants.Constants.TOKEN;
 
 public class RepositoryListFragment extends Fragment {
 
@@ -31,12 +34,14 @@ public class RepositoryListFragment extends Fragment {
     private List<Repository> repositoryList;
     private LinearLayoutManager mLayoutManager;
     private ProgressBar progressBar;
+    private SharedPreferences preferences;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_repository, container, false);
         mLayoutManager = new LinearLayoutManager(getActivity());
+        preferences = getActivity().getSharedPreferences("authUser", Context.MODE_PRIVATE);
 
         if(getArguments().get("repo").equals("starred")){
             getActivity().setTitle("Starred repositories");
@@ -80,6 +85,45 @@ public class RepositoryListFragment extends Fragment {
     }
 
     private void getOwnRepositories(){
+        NetworkService.getInstance()
+                .getRepoApi()
+                .getOwnRepositories(preferences.getString(TOKEN,""))
+                .enqueue(new Callback<List<Repository>>() {
+                    @Override
+                    public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
+                        repositoryList = response.body();
 
+                        adapter = new RepositoryListAdapter(getContext(),repositoryList);
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Repository>> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
+    }
+
+    public void changeToStarred(){
+        recyclerView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        getActivity().setTitle("Starred repositories");
+        getArguments().putString("repo","starred");
+
+        getStarredRepositories();
+    }
+
+    public void changeToOwn(){
+        recyclerView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        getActivity().setTitle("My repositories");
+        getArguments().putString("repo","own");
+
+        getOwnRepositories();
     }
 }

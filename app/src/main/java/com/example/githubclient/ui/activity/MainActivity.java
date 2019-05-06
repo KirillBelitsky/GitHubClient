@@ -23,6 +23,8 @@ import com.example.githubclient.ui.fragment.RepositoryListFragment;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
 
+import java.sql.SQLOutput;
+
 import static com.example.githubclient.constants.Constants.AVATAR_URL;
 import static com.example.githubclient.constants.Constants.LOGIN;
 import static com.example.githubclient.constants.Constants.USERNAME;
@@ -43,8 +45,8 @@ public class MainActivity extends AppCompatActivity
 
         preferences = getSharedPreferences("authUser",MODE_PRIVATE);
         userSession = new UserSession(getApplicationContext());
-        repositoryFragment = new RepositoryListFragment();
         issuesListFragment = new IssueListFragment();
+        repositoryFragment = new RepositoryListFragment();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,7 +93,8 @@ public class MainActivity extends AppCompatActivity
                 issues();
                 break;
 
-            case R.id.repositories:
+            case R.id.my_repos
+                    :
                 userRepo();
                 break;
 
@@ -116,6 +119,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void starredRepo(){
+        if(repositoryFragment.isVisible()){
+            if(repositoryFragment.getArguments().get("repo").equals("own"))
+                repositoryFragment.changeToStarred();
+            return;
+        }
+
         Bundle bundle = new Bundle();
         bundle.putString(LOGIN,preferences.getString(LOGIN,""));
         bundle.putString("repo","starred");
@@ -128,6 +137,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void userRepo(){
+        if(repositoryFragment.isVisible()){
+            if(repositoryFragment.getArguments().get("repo").equals("starred"))
+                repositoryFragment.changeToOwn();
+            return;
+        }
+
         Bundle bundle = new Bundle();
         bundle.putString(LOGIN, preferences.getString(LOGIN,""));
         bundle.putString("repo","own");
@@ -137,7 +152,6 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_fragment_container,repositoryFragment);
         transaction.commit();
-
     }
 
     private void issues(){
