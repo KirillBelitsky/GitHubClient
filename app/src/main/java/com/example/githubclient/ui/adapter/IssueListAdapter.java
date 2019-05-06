@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.githubclient.R;
 import com.example.githubclient.model.Issue;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class IssueListAdapter extends RecyclerView.Adapter<IssueListAdapter.ViewHolder> {
@@ -33,12 +34,13 @@ public class IssueListAdapter extends RecyclerView.Adapter<IssueListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int positon) {
         Issue issue = issues.get(positon);
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
         viewHolder.title.setText(issue.getTitle());
         viewHolder.body.setText(issue.getBody());
         viewHolder.state.setText(issue.getState());
         viewHolder.commentsCount.setText(String.valueOf(issue.getComments()));
-        viewHolder.date.setText(issue.getDate());
+        viewHolder.date.setText(format.format(issue.getDate()));
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.githubclient.R;
 import com.example.githubclient.model.Repository;
@@ -29,15 +30,22 @@ public class RepositoryListFragment extends Fragment {
     private RepositoryListAdapter adapter;
     private List<Repository> repositoryList;
     private LinearLayoutManager mLayoutManager;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_repository, container, false);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        getActivity().setTitle("Starred repositories");
 
-        getRepositories();
+        if(getArguments().get("repo").equals("starred")){
+            getActivity().setTitle("Starred repositories");
+            getStarredRepositories();
+        }
+        else{
+            getActivity().setTitle("My repositories");
+            getOwnRepositories();
+        }
 
         return view;
     }
@@ -45,9 +53,10 @@ public class RepositoryListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.recycler_view);
+        progressBar = view.findViewById(R.id.repo_list_progress_bar);
     }
 
-    private void getRepositories() {
+    private void getStarredRepositories() {
         NetworkService.getInstance()
                 .getRepoApi()
                 .getStarredRepoByLogin(getArguments().getString(LOGIN))
@@ -55,16 +64,12 @@ public class RepositoryListFragment extends Fragment {
                     @Override
                     public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
                         repositoryList = response.body();
-                        if (repositoryList == null) {
-                            System.out.println("111");
-                        } else {
-                            for (Repository temp : repositoryList)
-                                System.out.println(temp.toString());
-                        }
 
                         adapter = new RepositoryListAdapter(getContext(),repositoryList);
                         recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(mLayoutManager);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -72,7 +77,9 @@ public class RepositoryListFragment extends Fragment {
                         call.cancel();
                     }
                 });
+    }
 
+    private void getOwnRepositories(){
 
     }
 }

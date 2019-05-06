@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.githubclient.R;
 import com.example.githubclient.model.Issue;
@@ -32,6 +33,7 @@ public class IssueListFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
     private SharedPreferences preferences;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -50,6 +52,7 @@ public class IssueListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.recycler_view_issues);
+        progressBar = view.findViewById(R.id.issue_list_progress_bar);
     }
 
     private void loadData(){
@@ -59,14 +62,14 @@ public class IssueListFragment extends Fragment {
                 .enqueue(new Callback<List<Issue>>() {
                     @Override
                     public void onResponse(Call<List<Issue>> call, Response<List<Issue>> response) {
-                        System.out.println("123456");
-
                         issues = response.body();
-                        for (Issue temp : issues)
-                            System.out.println(temp.toString());
+
                         adapter = new IssueListAdapter(response.body(),getContext());
                         recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(mLayoutManager);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.VISIBLE);
+
                     }
 
                     @Override

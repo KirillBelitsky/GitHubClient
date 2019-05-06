@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.logout:
                 userSession.invalidate();
                 startActivity(new Intent(this, StartActivity.class));
+                finish();
                 break;
 
         }
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity
     private void starredRepo(){
         Bundle bundle = new Bundle();
         bundle.putString(LOGIN,preferences.getString(LOGIN,""));
+        bundle.putString("repo","starred");
 
         repositoryFragment.setArguments(bundle);
 
@@ -126,6 +128,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void userRepo(){
+        Bundle bundle = new Bundle();
+        bundle.putString(LOGIN, preferences.getString(LOGIN,""));
+        bundle.putString("repo","own");
+
+        repositoryFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragment_container,repositoryFragment);
+        transaction.commit();
 
     }
 

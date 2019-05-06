@@ -3,6 +3,8 @@ package com.example.githubclient.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Issue {
 
     @Expose
@@ -13,7 +15,7 @@ public class Issue {
 
     @SerializedName("updated_at")
     @Expose
-    private String date;
+    private Date date;
 
     private String body;
 
@@ -36,11 +38,11 @@ public class Issue {
         this.state = state;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.githubclient.R;
 import com.example.githubclient.model.Repository;
+import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
     @Override
     public void onBindViewHolder(@NonNull RepositoryListAdapter.ViewHolder holder, int position) {
         Repository repository = repositoryList.get(position);
-        Picasso.with(context).load(repository.getOwner().getAvatarUrl()).into(holder.imageView);
+        Picasso.with(context).load(repository.getOwner().getAvatarUrl()).transform(new CircularTransformation()).into(holder.imageView);
         holder.nameView.setText(repository.getName());
         holder.languageView.setText(repository.getLanguage());
         holder.descriptionView.setText(repository.getDescription());
