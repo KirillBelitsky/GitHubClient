@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import com.example.githubclient.R;
 import com.example.githubclient.network.session.UserSession;
 import com.example.githubclient.ui.fragment.IssueListFragment;
 import com.example.githubclient.ui.fragment.RepositoryListFragment;
+import com.example.githubclient.ui.fragment.SearchUserFragment;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private UserSession userSession;
     private RepositoryListFragment repositoryFragment;
     private IssueListFragment issuesListFragment;
+    private SearchUserFragment searchUserFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity
         userSession = new UserSession(getApplicationContext());
         issuesListFragment = new IssueListFragment();
         repositoryFragment = new RepositoryListFragment();
+        searchUserFragment = new SearchUserFragment();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,8 +95,11 @@ public class MainActivity extends AppCompatActivity
                 issues();
                 break;
 
-            case R.id.my_repos
-                    :
+            case R.id.search:
+                search();
+                break;
+
+            case R.id.my_repos:
                 userRepo();
                 break;
 
@@ -127,11 +134,7 @@ public class MainActivity extends AppCompatActivity
         bundle.putString(LOGIN,preferences.getString(LOGIN,""));
         bundle.putString("repo","starred");
 
-        repositoryFragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_fragment_container,repositoryFragment);
-        transaction.commit();
+        loadFragmentRepo(bundle);
     }
 
     private void userRepo(){
@@ -145,16 +148,27 @@ public class MainActivity extends AppCompatActivity
         bundle.putString(LOGIN, preferences.getString(LOGIN,""));
         bundle.putString("repo","own");
 
-        repositoryFragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_fragment_container,repositoryFragment);
-        transaction.commit();
+        loadFragmentRepo(bundle);
     }
+
 
     private void issues(){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_fragment_container,issuesListFragment);
+        transaction.commit();
+    }
+
+    private void search(){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragment_container,searchUserFragment);
+        transaction.commit();
+    }
+
+    private void loadFragmentRepo(Bundle bundle){
+        repositoryFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragment_container,repositoryFragment);
         transaction.commit();
     }
 }

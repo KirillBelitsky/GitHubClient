@@ -37,6 +37,7 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
     @Override
     public void onBindViewHolder(@NonNull RepositoryListAdapter.ViewHolder holder, int position) {
         Repository repository = repositoryList.get(position);
+
         Picasso.with(context).load(repository.getOwner().getAvatarUrl()).transform(new CircularTransformation()).into(holder.imageView);
         holder.nameView.setText(repository.getName());
         holder.languageView.setText(repository.getLanguage());
@@ -52,7 +53,6 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         private final ImageView imageView;
         private final TextView nameView, descriptionView,languageView;
         private final TextView starView,forkView,ownerView;
