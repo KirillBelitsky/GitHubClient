@@ -1,5 +1,6 @@
 package com.example.githubclient.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,15 +16,17 @@ import android.widget.Toast;
 
 import com.example.githubclient.R;
 import com.example.githubclient.model.User;
+import com.example.githubclient.network.response.SearchUsersResponce;
 import com.example.githubclient.network.service.NetworkService;
-import com.example.githubclient.ui.activity.SearchActivity;
-import com.example.githubclient.ui.adapter.UserListAdapter;
-
-import java.util.List;
+import com.example.githubclient.ui.activity.ProfileActivity;
+import com.example.githubclient.ui.adapter.UserAdapter;
+import com.example.githubclient.ui.adapter.listener.OnItemClickListener;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.githubclient.constants.Constants.LOGIN;
 
 public class SearchUserFragment extends Fragment {
 
@@ -31,7 +34,6 @@ public class SearchUserFragment extends Fragment {
     private SearchView searchView;
     private LinearLayoutManager layoutManager;
     private ProgressBar progressBar;
-    private UserListAdapter adapter;
 
     @Nullable
     @Override
@@ -82,13 +84,20 @@ public class SearchUserFragment extends Fragment {
 
         NetworkService.getInstance()
                 .getUserApi()
-                .searchUsers(query,"1","5")
-                .enqueue(new Callback<List<User>>() {
+                .searchUsers(query,"1","25")
+                .enqueue(new Callback<SearchUsersResponce>() {
                     @Override
-                    public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                    public void onResponse(Call<SearchUsersResponce> call, Response<SearchUsersResponce> response) {
                         System.out.println("1111");
-                        adapter = new UserListAdapter(response.body(),getContext());
-                        recyclerView.setAdapter(adapter);
+
+                        recyclerView.setAdapter(new UserAdapter(response.body().getUsers(), getContext(), new OnItemClickListener<User>() {
+                            @Override
+                            public void onItemClick(User item) {
+                                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                                intent.putExtra(LOGIN,item.getLogin());
+                                startActivity(intent);
+                            }
+                        }));
                         recyclerView.setLayoutManager(layoutManager);
 
                         searchView.setEnabled(true);
@@ -97,8 +106,7 @@ public class SearchUserFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<List<User>> call, Throwable t) {
-                        System.out.println("242344");
+                    public void onFailure(Call<SearchUsersResponce> call, Throwable t) {
                         call.cancel();
                     }
                 });

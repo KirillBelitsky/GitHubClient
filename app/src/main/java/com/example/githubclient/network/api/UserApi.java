@@ -2,6 +2,7 @@ package com.example.githubclient.network.api;
 
 import com.example.githubclient.model.User;
 import com.example.githubclient.model.UserDataEdit;
+import com.example.githubclient.network.response.SearchUsersResponce;
 
 import java.util.List;
 
@@ -28,5 +29,5 @@ public interface UserApi {
     Call<User> getCurrentUser(@Header("Authorization") String token);
 
     @GET("/search/users")
-    Call<List<User>> searchUsers(@Query("q") String query,@Query("page") String page,@Query("per_page") String per_page);
+    Call<SearchUsersResponce> searchUsers(@Query("q") String query, @Query("page") String page, @Query("per_page") String per_page);
 }
