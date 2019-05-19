@@ -27,7 +27,7 @@ import retrofit2.Response;
 import static com.example.githubclient.constants.Constants.LOGIN;
 import static com.example.githubclient.constants.Constants.TOKEN;
 
-public class RepositoryListFragment extends Fragment {
+public class RepositoryFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RepositoryListAdapter adapter;
@@ -48,8 +48,12 @@ public class RepositoryListFragment extends Fragment {
             getStarredRepositories();
         }
         else{
-            getActivity().setTitle("My repositories");
-            getOwnRepositories();
+            System.out.println(getArguments().getString(LOGIN,""));
+            getActivity().setTitle("Repositories");
+            if(getArguments().get(LOGIN).equals(preferences.getString(LOGIN,"")))
+                getOwnRepositories();
+            else
+                getRepositories();
         }
 
         return view;
@@ -88,6 +92,29 @@ public class RepositoryListFragment extends Fragment {
         NetworkService.getInstance()
                 .getRepoApi()
                 .getOwnRepositories(preferences.getString(TOKEN,""))
+                .enqueue(new Callback<List<Repository>>() {
+                    @Override
+                    public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
+                        repositoryList = response.body();
+
+                        adapter = new RepositoryListAdapter(getContext(),repositoryList);
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Repository>> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
+    }
+
+    private void getRepositories(){
+        NetworkService.getInstance()
+                .getRepoApi()
+                .getRepositoriesByLogin(getArguments().getString(LOGIN))
                 .enqueue(new Callback<List<Repository>>() {
                     @Override
                     public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {

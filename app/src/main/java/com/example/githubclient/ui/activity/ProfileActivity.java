@@ -3,14 +3,23 @@ package com.example.githubclient.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.example.githubclient.R;
 
+import com.example.githubclient.ui.adapter.SimpleFragmentPagerAdapter;
 import com.example.githubclient.ui.fragment.ProfileFragment;
+import com.example.githubclient.ui.fragment.RepositoryFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.githubclient.constants.Constants.LOGIN;
 
@@ -19,6 +28,8 @@ public class ProfileActivity extends AppCompatActivity {
     private Fragment profileFragment;
     private String login;
     private Bundle bundle;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,13 +43,26 @@ public class ProfileActivity extends AppCompatActivity {
         profileFragment = new ProfileFragment();
 
         login = getIntent().getStringExtra(LOGIN);
-
         bundle.putString(LOGIN,login);
-        profileFragment.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.profile_container,profileFragment);
-        fragmentTransaction.commit();
+        bundle.putString("repo","own");
 
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ProfileFragment profileFragment = new ProfileFragment();
+        profileFragment.setArguments(bundle);
+        RepositoryFragment repositoryFragment = new RepositoryFragment();
+        repositoryFragment.setArguments(bundle);
+
+        adapter.addFrag(profileFragment, "Profile");
+        adapter.addFrag(repositoryFragment, "Repositories");
+        viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -57,6 +81,35 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.profile_opp, menu);
         return true;
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFrag(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 
 }

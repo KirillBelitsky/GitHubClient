@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +19,7 @@ import android.widget.TextView;
 import com.example.githubclient.R;
 import com.example.githubclient.network.session.UserSession;
 import com.example.githubclient.ui.fragment.IssueListFragment;
-import com.example.githubclient.ui.fragment.RepositoryListFragment;
+import com.example.githubclient.ui.fragment.RepositoryFragment;
 import com.example.githubclient.ui.fragment.SearchUserFragment;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     private SharedPreferences preferences;
     private UserSession userSession;
-    private RepositoryListFragment repositoryFragment;
+    private RepositoryFragment repositoryFragment;
     private IssueListFragment issuesListFragment;
     private SearchUserFragment searchUserFragment;
 
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         preferences = getSharedPreferences("authUser",MODE_PRIVATE);
         userSession = new UserSession(getApplicationContext());
         issuesListFragment = new IssueListFragment();
-        repositoryFragment = new RepositoryListFragment();
+        repositoryFragment = new RepositoryFragment();
         searchUserFragment = new SearchUserFragment();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

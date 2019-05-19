@@ -49,13 +49,14 @@ public class ProfileFragment extends Fragment {
         companyHeader = view.findViewById(R.id.profile_company_header);
         profileImage = view.findViewById(R.id.profie_image);
 
-        getDataFromBundle();
+        getData();
+        getActivity().setTitle("Profile");
 
         return view;
     }
 
 
-    private void getDataFromBundle(){
+    private void getData(){
         NetworkService.getInstance()
                 .getUserApi()
                 .getUserByLogin(getArguments().get(LOGIN).toString())
