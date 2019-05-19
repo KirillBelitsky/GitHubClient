@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorViewLogin"
+    android:background="@color/colorViewLoginBack"
     android:gravity="center_horizontal"
     android:padding="@dimen/activity_margin"
     tools:context=".ui.activity.LoginActivity">
@@ -27,12 +27,22 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:padding="@dimen/spacing_normal"
-                android:src="@mipmap/logo"
-                android:background="@color/colorViewLoginImageBackground"/>
+                android:layout_height="wrap_content"
+                android:background="@color/colorViewLoginImageBackground">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:padding="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/logo_round"
+                    android:background="@drawable/circle"/>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
