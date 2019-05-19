@@ -31,6 +31,8 @@
     <string name="edit_form_action_save">Save</string>
     <string name="state">State:</string>
     <string name="msg_users_not_found">Users not found</string>
+    <string name="username_invalid">Invalid username!</string>
+    <string name="password_invalid">Invalid password!</string>
 
 
 
