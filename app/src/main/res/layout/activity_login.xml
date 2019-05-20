@@ -98,7 +98,7 @@
                     android:background="@color/white"
                     app:buttonText="@string/login"
                     app:failedColor="@color/red"
-                    app:succeedColor="@color/colorAccent"
+                    app:succeedColor="@color/colorViewLoginImageBackground"
                     android:textColor="@color/colorViewLoginImageBackground"
                     android:onClick="onLoginClick"/>
 
