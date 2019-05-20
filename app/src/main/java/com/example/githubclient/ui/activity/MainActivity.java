@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.githubclient.R;
+import com.example.githubclient.model.User;
+import com.example.githubclient.network.service.NetworkService;
 import com.example.githubclient.network.session.UserSession;
 import com.example.githubclient.ui.fragment.IssueListFragment;
 import com.example.githubclient.ui.fragment.RepositoryFragment;
@@ -24,8 +26,15 @@ import com.example.githubclient.ui.fragment.SearchUserFragment;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import static com.example.githubclient.constants.Constants.AVATAR_URL;
 import static com.example.githubclient.constants.Constants.LOGIN;
+import static com.example.githubclient.constants.Constants.TOKEN;
 import static com.example.githubclient.constants.Constants.USERNAME;
 
 
@@ -37,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     private RepositoryFragment repositoryFragment;
     private IssueListFragment issuesListFragment;
     private SearchUserFragment searchUserFragment;
+    private View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,23 +59,22 @@ public class MainActivity extends AppCompatActivity
         repositoryFragment = new RepositoryFragment();
         searchUserFragment = new SearchUserFragment();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View header = navigationView.getHeaderView(0);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        header = navigationView.getHeaderView(0);
 
         Picasso.with(getApplicationContext()).load(preferences.getString(AVATAR_URL,""))
                 .transform(new CircularTransformation()).into(((ImageView)header.findViewById(R.id.imageHeaderUser)));
 
-        ((TextView)header.findViewById(R.id.headerName)).setText(preferences.getString(USERNAME,""));
-        ((TextView)header.findViewById(R.id.headerLogin)).setText(preferences.getString(LOGIN,""));
+        loadData();
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -169,5 +178,25 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_fragment_container,repositoryFragment);
         transaction.commit();
+    }
+
+    private void loadData(){
+        final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+        NetworkService.getInstance()
+                .getUserApi()
+                .getCurrentUser(preferences.getString(TOKEN,""))
+                .enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        ((TextView)header.findViewById(R.id.headerCreatedAt)).append(" " + format.format(response.body().getDate()));
+                        ((TextView)header.findViewById(R.id.headerLogin)).setText(response.body().getLogin());
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
     }
 }

@@ -106,9 +106,9 @@ public class EditProfileActivity extends AppCompatActivity {
                             email.setText(response.body().getEmail());
                             company.setText(response.body().getCompany());
                         }
+
                         progressBar.setVisibility(View.INVISIBLE);
                         layout.setVisibility(View.VISIBLE);
-
                     }
 
                     @Override
@@ -124,4 +124,5 @@ public class EditProfileActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }

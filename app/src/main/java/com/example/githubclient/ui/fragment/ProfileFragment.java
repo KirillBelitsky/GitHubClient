@@ -15,6 +15,8 @@ import com.example.githubclient.network.service.NetworkService;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,10 +27,11 @@ import static com.example.githubclient.constants.Constants.LOGIN;
 public class ProfileFragment extends Fragment {
 
     private TextView name;
+    private TextView login;
     private TextView followers;
     private TextView following;
-    private TextView repo;
     private TextView email;
+    private TextView createdAt;
     private LinearLayout emailHeader;
     private TextView company;
     private LinearLayout companyHeader;
@@ -40,9 +43,10 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         name = view.findViewById(R.id.profile_username);
+        login = view.findViewById(R.id.profile_login);
         followers = view.findViewById(R.id.profile_followers);
         following = view.findViewById(R.id.profile_following);
-        repo = view.findViewById(R.id.profile_repo);
+        createdAt = view.findViewById(R.id.profile_created_at);
         email = view.findViewById(R.id.profile_email);
         emailHeader = view.findViewById(R.id.profile_email_header);
         company = view.findViewById(R.id.profile_company);
@@ -57,6 +61,8 @@ public class ProfileFragment extends Fragment {
 
 
     private void getData(){
+        final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
         NetworkService.getInstance()
                 .getUserApi()
                 .getUserByLogin(getArguments().get(LOGIN).toString())
@@ -64,21 +70,22 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         Picasso.with(getContext()).load(response.body().getAvatarUrl()).transform(new CircularTransformation()).into(profileImage);
+                        login.setText(response.body().getLogin());
                         name.setText(response.body().getName());
+                        createdAt.append(" " +format.format(response.body().getDate()));
                         followers.setText(String.valueOf(response.body().getFollowers()));
                         following.setText(String.valueOf(response.body().getFollowing()));
-                        repo.setText(String.valueOf(response.body().getCountRepo()));
 
-                        if (response.body().getEmail() != null) {
-                            emailHeader.setVisibility(View.VISIBLE);
-                            email.setText(response.body().getEmail());
+                        if (response.body().getEmail() == null) {
+                            emailHeader.setVisibility(View.GONE);
                         }
+                        else email.setText(response.body().getEmail()
+                        );
 
-                        if (response.body().getCompany() != null) {
-                            companyHeader.setVisibility(View.VISIBLE);
-                            System.out.println("11111" + response.body().getCompany());
-                            company.setText(response.body().getCompany());
+                        if (response.body().getCompany() == null) {
+                            companyHeader.setVisibility(View.GONE);
                         }
+                        else company.setText(response.body().getCompany());
 
                     }
 

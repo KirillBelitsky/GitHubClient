@@ -33,13 +33,13 @@
                 android:background="@color/colorViewLoginImageBackground">
 
                 <ImageView
+                    android:id="@+id/loginImage"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
                     android:padding="@dimen/spacing_normal"
                     android:layout_marginTop="@dimen/spacing_normal"
                     android:layout_marginBottom="@dimen/spacing_normal"
                     android:layout_centerInParent="true"
-                    android:src="@mipmap/logo_round"
                     android:background="@drawable/circle"/>
 
             </RelativeLayout>

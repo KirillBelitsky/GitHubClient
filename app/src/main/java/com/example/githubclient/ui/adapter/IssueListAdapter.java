@@ -53,11 +53,11 @@ public class IssueListAdapter extends RecyclerView.Adapter<IssueListAdapter.View
 
         ViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.item_issue_title);
-            body = (TextView) view.findViewById(R.id.item_issue_body);
-            commentsCount = (TextView) view.findViewById(R.id.item_issue_commentsCount);
-            date = (TextView) view.findViewById(R.id.item_issue_date);
-            state = (TextView) view.findViewById(R.id.item_issue_state);
+            title = view.findViewById(R.id.item_issue_title);
+            body = view.findViewById(R.id.item_issue_body);
+            commentsCount = view.findViewById(R.id.item_issue_commentsCount);
+            date = view.findViewById(R.id.item_issue_date);
+            state = view.findViewById(R.id.item_issue_state);
         }
     }
 }

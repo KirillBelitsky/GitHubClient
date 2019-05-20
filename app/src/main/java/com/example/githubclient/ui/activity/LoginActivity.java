@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.githubclient.R;
 import com.example.githubclient.network.service.NetworkService;
@@ -30,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText mPassword;
     private TextInputLayout mPasswordLayout;
     private SubmitButton loginButton;
+    private ImageView imageView;
+
     private UserSession userSession;
     private User user;
 
@@ -43,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.password_et);
         mUsernameLayout = findViewById(R.id.user_name_layout);
         mPasswordLayout = findViewById(R.id.password_layout);
+        imageView = findViewById(R.id.loginImage);
 
         userSession = new UserSession(getApplicationContext());
 
@@ -71,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                     }
-                                }, 2500);
+                                }, 5000);
                                 loginSuccesfull();
                             }
 
