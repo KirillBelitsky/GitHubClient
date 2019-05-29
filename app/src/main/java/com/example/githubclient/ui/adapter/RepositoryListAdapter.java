@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.githubclient.R;
 import com.example.githubclient.model.Repository;
+import com.example.githubclient.ui.adapter.listener.OnItemClickListener;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
 
@@ -21,10 +22,12 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
 
     private List<Repository> repositoryList;
     private Context context;
+    private OnItemClickListener<Repository> clickListener;
 
-    public RepositoryListAdapter(Context context,List<Repository> repositories){
+    public RepositoryListAdapter(Context context,List<Repository> repositories,OnItemClickListener<Repository> clickListener){
         this.context = context;
         this.repositoryList = repositories;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -36,15 +39,7 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
 
     @Override
     public void onBindViewHolder(@NonNull RepositoryListAdapter.ViewHolder holder, int position) {
-        Repository repository = repositoryList.get(position);
-
-        Picasso.with(context).load(repository.getOwner().getAvatarUrl()).transform(new CircularTransformation()).into(holder.imageView);
-        holder.nameView.setText(repository.getName());
-        holder.languageView.setText(repository.getLanguage());
-        holder.descriptionView.setText(repository.getDescription());
-        holder.starView.setText(String.valueOf(repository.getStarCount()));
-        holder.forkView.setText(String.valueOf(repository.getForkCount()));
-        holder.ownerView.setText(repository.getOwner().getLogin());
+        holder.bind(repositoryList.get(position), clickListener);
     }
 
     @Override
@@ -52,26 +47,39 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
         return repositoryList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imageView;
         private final TextView nameView, descriptionView,languageView;
         private final TextView starView,forkView,ownerView;
 
         ViewHolder(View view) {
             super(view);
-            imageView = (ImageView) view.findViewById(R.id.iv_user_avatar);
-            nameView = (TextView) view.findViewById(R.id.tv_repo_name);
-            descriptionView = (TextView) view.findViewById(R.id.tv_repo_description);
-            languageView = (TextView) view.findViewById(R.id.tv_language);
-            starView = (TextView) view.findViewById(R.id.tv_star_num);
-            forkView = (TextView) view.findViewById(R.id.tv_fork_num);
-            ownerView = (TextView) view.findViewById(R.id.tv_owner_name);
+            imageView = view.findViewById(R.id.iv_user_avatar);
+            nameView = view.findViewById(R.id.tv_repo_name);
+            descriptionView = view.findViewById(R.id.tv_repo_description);
+            languageView = view.findViewById(R.id.tv_language);
+            starView = view.findViewById(R.id.tv_star_num);
+            forkView = view.findViewById(R.id.tv_fork_num);
+            ownerView = view.findViewById(R.id.tv_owner_name);
         }
 
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(context,"gdfg",Toast.LENGTH_SHORT).show();
+        private void bind(final Repository repository, final OnItemClickListener<Repository> clickListener){
+            Picasso.with(context).load(repository.getOwner().getAvatarUrl()).transform(new CircularTransformation()).into(imageView);
+            nameView.setText(repository.getName());
+            languageView.setText(repository.getLanguage());
+            descriptionView.setText(repository.getDescription());
+            starView.setText(String.valueOf(repository.getStarCount()));
+            forkView.setText(String.valueOf(repository.getForkCount()));
+            ownerView.setText(repository.getOwner().getLogin());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickListener.onItemClick(repository);
+                }
+            });
         }
+
     }
 
 }

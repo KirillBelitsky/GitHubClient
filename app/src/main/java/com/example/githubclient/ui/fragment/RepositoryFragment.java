@@ -1,6 +1,7 @@
 package com.example.githubclient.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +17,9 @@ import android.widget.ProgressBar;
 import com.example.githubclient.R;
 import com.example.githubclient.model.Repository;
 import com.example.githubclient.network.service.NetworkService;
+import com.example.githubclient.ui.activity.RepositoryActivity;
 import com.example.githubclient.ui.adapter.RepositoryListAdapter;
+import com.example.githubclient.ui.adapter.listener.OnItemClickListener;
 
 import java.util.List;
 
@@ -73,7 +76,13 @@ public class RepositoryFragment extends Fragment {
                     public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
                         repositoryList = response.body();
 
-                        adapter = new RepositoryListAdapter(getContext(),repositoryList);
+                        adapter = new RepositoryListAdapter(getContext(), repositoryList, new OnItemClickListener<Repository>() {
+                            @Override
+                            public void onItemClick(Repository item) {
+                                Intent intent = new Intent(getActivity(),RepositoryActivity.class);
+                                startActivity(intent);
+                            }
+                        });
                         recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(mLayoutManager);
                         progressBar.setVisibility(View.INVISIBLE);
@@ -96,7 +105,13 @@ public class RepositoryFragment extends Fragment {
                     public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
                         repositoryList = response.body();
 
-                        adapter = new RepositoryListAdapter(getContext(),repositoryList);
+                        adapter = new RepositoryListAdapter(getContext(),repositoryList, new OnItemClickListener<Repository>() {
+                            @Override
+                            public void onItemClick(Repository item) {
+                                Intent intent = new Intent(getActivity(), RepositoryActivity.class);
+                                startActivity(intent);
+                            }
+                        });
                         recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(mLayoutManager);
                         progressBar.setVisibility(View.INVISIBLE);
@@ -119,7 +134,13 @@ public class RepositoryFragment extends Fragment {
                     public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
                         repositoryList = response.body();
 
-                        adapter = new RepositoryListAdapter(getContext(),repositoryList);
+                        adapter = new RepositoryListAdapter(getContext(),repositoryList, new OnItemClickListener<Repository>() {
+                            @Override
+                            public void onItemClick(Repository item) {
+                                Intent intent = new Intent(getActivity(),RepositoryActivity.class);
+                                startActivity(intent);
+                            }
+                        });
                         recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(mLayoutManager);
                         progressBar.setVisibility(View.INVISIBLE);

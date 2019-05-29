@@ -57,7 +57,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             image = itemView.findViewById(R.id.search_user_image);
         }
 
-        public void bind(final User user, final OnItemClickListener<User> clickListener){
+        private void bind(final User user, final OnItemClickListener<User> clickListener){
             Picasso.with(context).load(user.getAvatarUrl()).transform(new CircularTransformation()).into(image);
             login.setText(user.getLogin());
             name.setText(user.getName());

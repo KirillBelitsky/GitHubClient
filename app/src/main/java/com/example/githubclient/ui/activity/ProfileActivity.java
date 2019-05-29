@@ -7,14 +7,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.example.githubclient.R;
 
-import com.example.githubclient.ui.adapter.SimpleFragmentPagerAdapter;
 import com.example.githubclient.ui.fragment.ProfileFragment;
 import com.example.githubclient.ui.fragment.RepositoryFragment;
 
@@ -25,7 +23,6 @@ import static com.example.githubclient.constants.Constants.LOGIN;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private String login;
     private Bundle bundle;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -40,14 +37,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         bundle = new Bundle();
 
-        login = getIntent().getStringExtra(LOGIN);
-        bundle.putString(LOGIN,login);
+        bundle.putString(LOGIN,getIntent().getStringExtra(LOGIN));
         bundle.putString("repo","own");
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout = findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
 
