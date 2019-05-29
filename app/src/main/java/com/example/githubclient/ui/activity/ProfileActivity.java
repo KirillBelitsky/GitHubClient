@@ -25,7 +25,6 @@ import static com.example.githubclient.constants.Constants.LOGIN;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private Fragment profileFragment;
     private String login;
     private Bundle bundle;
     private TabLayout tabLayout;
@@ -40,7 +39,6 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         bundle = new Bundle();
-        profileFragment = new ProfileFragment();
 
         login = getIntent().getStringExtra(LOGIN);
         bundle.putString(LOGIN,login);

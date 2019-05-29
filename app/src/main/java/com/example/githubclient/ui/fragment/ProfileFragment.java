@@ -1,5 +1,6 @@
 package com.example.githubclient.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.githubclient.R;
 import com.example.githubclient.model.User;
 import com.example.githubclient.network.service.NetworkService;
+import com.example.githubclient.ui.activity.FollowersActivity;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
 
@@ -24,6 +26,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.githubclient.constants.Constants.FOLLOWERS;
+import static com.example.githubclient.constants.Constants.FOLLOWING;
 import static com.example.githubclient.constants.Constants.LOGIN;
 
 
@@ -32,7 +36,9 @@ public class ProfileFragment extends Fragment {
     private TextView name;
     private TextView login;
     private TextView followers;
+    private LinearLayout followersHeader;
     private TextView following;
+    private LinearLayout followingHeader;
     private TextView email;
     private TextView createdAt;
     private LinearLayout emailHeader;
@@ -43,14 +49,16 @@ public class ProfileFragment extends Fragment {
     private RelativeLayout layout;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         name = view.findViewById(R.id.profile_username);
         login = view.findViewById(R.id.profile_login);
         followers = view.findViewById(R.id.profile_followers);
+        followersHeader = view.findViewById(R.id.profile_followers_header);
         following = view.findViewById(R.id.profile_following);
+        followingHeader = view.findViewById(R.id.profile_following_header);
         createdAt = view.findViewById(R.id.profile_created_at);
         email = view.findViewById(R.id.profile_email);
         emailHeader = view.findViewById(R.id.profile_email_header);
@@ -65,6 +73,24 @@ public class ProfileFragment extends Fragment {
 
         getData();
         getActivity().setTitle("Profile");
+
+        followersHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),FollowersActivity.class);
+                intent.putExtra(FOLLOWERS,getArguments().getString(LOGIN));
+                startActivity(intent);
+            }
+        });
+
+        followingHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),FollowersActivity.class);
+                intent.putExtra(FOLLOWING,getArguments().getString(LOGIN));
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

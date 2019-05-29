@@ -48,7 +48,6 @@ public class RepositoryFragment extends Fragment {
             getStarredRepositories();
         }
         else{
-            System.out.println(getArguments().getString(LOGIN,""));
             getActivity().setTitle("Repositories");
             if(getArguments().get(LOGIN).equals(preferences.getString(LOGIN,"")))
                 getOwnRepositories();

@@ -1,9 +1,11 @@
 package com.example.githubclient.network.service;
 
+import com.example.githubclient.network.api.FollowerApi;
 import com.example.githubclient.network.api.IssueApi;
 import com.example.githubclient.network.api.RepoApi;
 import com.example.githubclient.network.api.UserApi;
 
+import okhttp3.internal.http.RetryAndFollowUpInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -36,5 +38,9 @@ public class NetworkService {
 
     public IssueApi getIssueApi(){
         return mRetrofit.create(IssueApi.class);
+    }
+
+    public FollowerApi getFollowApi(){
+        return mRetrofit.create(FollowerApi.class);
     }
 }

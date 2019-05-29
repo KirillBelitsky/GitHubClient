@@ -88,7 +88,6 @@ public class SearchUserFragment extends Fragment {
                 .enqueue(new Callback<SearchUsersResponce>() {
                     @Override
                     public void onResponse(Call<SearchUsersResponce> call, Response<SearchUsersResponce> response) {
-                        System.out.println("1111");
 
                         recyclerView.setAdapter(new UserAdapter(response.body().getUsers(), getContext(), new OnItemClickListener<User>() {
                             @Override
@@ -110,7 +109,5 @@ public class SearchUserFragment extends Fragment {
                         call.cancel();
                     }
                 });
-        System.out.println("22222222");
     }
-
 }
