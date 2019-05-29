@@ -16,6 +16,7 @@ import com.example.githubclient.R;
 import com.example.githubclient.model.User;
 import com.example.githubclient.network.service.NetworkService;
 import com.example.githubclient.ui.activity.FollowersActivity;
+import com.example.githubclient.ui.activity.FollowingActivity;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
 
@@ -86,8 +87,8 @@ public class ProfileFragment extends Fragment {
         followingHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),FollowersActivity.class);
-                intent.putExtra(FOLLOWING,getArguments().getString(LOGIN));
+                Intent intent = new Intent(getActivity(), FollowingActivity.class);
+                intent.putExtra(FOLLOWERS,getArguments().getString(LOGIN));
                 startActivity(intent);
             }
         });

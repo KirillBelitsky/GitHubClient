@@ -34,7 +34,6 @@ public class FollowersActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
-    private FollowersAdapter adapter;
     private SharedPreferences preferences;
 
     @Override
