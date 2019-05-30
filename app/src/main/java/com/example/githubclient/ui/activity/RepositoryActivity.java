@@ -18,6 +18,9 @@ import com.example.githubclient.ui.fragment.RepositoryInfoFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.githubclient.constants.Constants.LOGIN;
+import static com.example.githubclient.constants.Constants.REPOSITORY;
+
 public class RepositoryActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
@@ -49,9 +52,18 @@ public class RepositoryActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        Bundle bundle = new Bundle();
+
         RepositoryInfoFragment repoInfoFragment = new RepositoryInfoFragment();
 
         RepositoryFilesFragment repoFilesFragment = new RepositoryFilesFragment();
+
+        System.out.println(getIntent().getStringExtra(LOGIN));
+        System.out.println(getIntent().getStringExtra(REPOSITORY));
+
+        bundle.putString(LOGIN,getIntent().getStringExtra(LOGIN));
+        bundle.putString(REPOSITORY,getIntent().getStringExtra(REPOSITORY));
+        repoFilesFragment.setArguments(bundle);
 
         adapter.addFrag(repoInfoFragment, "Info");
         adapter.addFrag(repoFilesFragment, "Files");

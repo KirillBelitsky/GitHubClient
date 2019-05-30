@@ -28,9 +28,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.githubclient.constants.Constants.LOGIN;
+import static com.example.githubclient.constants.Constants.REPOSITORY;
 import static com.example.githubclient.constants.Constants.TOKEN;
 
-public class RepositoryFragment extends Fragment {
+public class RepositoryListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RepositoryListAdapter adapter;
@@ -108,7 +109,10 @@ public class RepositoryFragment extends Fragment {
                         adapter = new RepositoryListAdapter(getContext(),repositoryList, new OnItemClickListener<Repository>() {
                             @Override
                             public void onItemClick(Repository item) {
-                                Intent intent = new Intent(getActivity(), RepositoryActivity.class);
+                                Intent intent = new Intent(getActivity(),RepositoryActivity.class);
+                                intent.putExtra(LOGIN,getArguments().getString(LOGIN));
+                                intent.putExtra(REPOSITORY,item.getName());
+
                                 startActivity(intent);
                             }
                         });
@@ -138,6 +142,9 @@ public class RepositoryFragment extends Fragment {
                             @Override
                             public void onItemClick(Repository item) {
                                 Intent intent = new Intent(getActivity(),RepositoryActivity.class);
+                                intent.putExtra(LOGIN,getArguments().getString(LOGIN));
+                                intent.putExtra(REPOSITORY,item.getName());
+
                                 startActivity(intent);
                             }
                         });

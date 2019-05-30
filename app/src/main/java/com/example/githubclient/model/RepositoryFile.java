@@ -3,7 +3,7 @@ package com.example.githubclient.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RepositoryFile {
+public class RepositoryFile{
 
     @SerializedName("name")
     @Expose
@@ -68,6 +68,7 @@ public class RepositoryFile {
     public boolean isFile(){
         return this.type.equals("file");
     }
+
 
     @Override
     public String toString() {

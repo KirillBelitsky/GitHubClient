@@ -1,7 +1,5 @@
 package com.example.githubclient.ui.adapter;
 
-import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,7 +56,7 @@ public class RepositoryFileAdapter extends RecyclerView.Adapter<RepositoryFileAd
 
         private void bind(final RepositoryFile file, final OnItemClickListener<RepositoryFile> clickListener){
             name.setText(file.getName());
-            size.setText(file.getSize());
+            size.setText(file.getSize() + "B");
 
             if(file.isFile())
                 image.setImageResource(R.drawable.ic_file);

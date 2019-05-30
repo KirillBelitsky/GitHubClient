@@ -1,6 +1,7 @@
 package com.example.githubclient.network.api;
 
 import com.example.githubclient.model.Repository;
+import com.example.githubclient.model.RepositoryFile;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -20,5 +21,7 @@ public interface RepoApi {
     @GET("/user/repos")
     Call<List<Repository>> getOwnRepositories(@Header("Authorization") String token);
 
+    @GET("/repos/{login}/{repo}/contents/")
+    Call<List<RepositoryFile>> getRepoFiles(@Path("login") String login, @Path("repo") String repo);
 }
 

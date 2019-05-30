@@ -21,7 +21,7 @@ import com.example.githubclient.model.User;
 import com.example.githubclient.network.service.NetworkService;
 import com.example.githubclient.network.session.UserSession;
 import com.example.githubclient.ui.fragment.IssueListFragment;
-import com.example.githubclient.ui.fragment.RepositoryFragment;
+import com.example.githubclient.ui.fragment.RepositoryListFragment;
 import com.example.githubclient.ui.fragment.SearchUserFragment;
 import com.example.githubclient.util.circleTransform.CircularTransformation;
 import com.squareup.picasso.Picasso;
@@ -35,7 +35,6 @@ import retrofit2.Response;
 import static com.example.githubclient.constants.Constants.AVATAR_URL;
 import static com.example.githubclient.constants.Constants.LOGIN;
 import static com.example.githubclient.constants.Constants.TOKEN;
-import static com.example.githubclient.constants.Constants.USERNAME;
 
 
 public class MainActivity extends AppCompatActivity
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity
 
     private SharedPreferences preferences;
     private UserSession userSession;
-    private RepositoryFragment repositoryFragment;
+    private RepositoryListFragment repositoryListFragment;
     private IssueListFragment issuesListFragment;
     private SearchUserFragment searchUserFragment;
     private View header;
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         preferences = getSharedPreferences("authUser",MODE_PRIVATE);
         userSession = new UserSession(getApplicationContext());
         issuesListFragment = new IssueListFragment();
-        repositoryFragment = new RepositoryFragment();
+        repositoryListFragment = new RepositoryListFragment();
         searchUserFragment = new SearchUserFragment();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -132,9 +131,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void starredRepo(){
-        if(repositoryFragment.isVisible()){
-            if(repositoryFragment.getArguments().get("repo").equals("own"))
-                repositoryFragment.changeToStarred();
+        if(repositoryListFragment.isVisible()){
+            if(repositoryListFragment.getArguments().get("repo").equals("own"))
+                repositoryListFragment.changeToStarred();
             return;
         }
 
@@ -146,9 +145,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void userRepo(){
-        if(repositoryFragment.isVisible()){
-            if(repositoryFragment.getArguments().get("repo").equals("starred"))
-                repositoryFragment.changeToOwn();
+        if(repositoryListFragment.isVisible()){
+            if(repositoryListFragment.getArguments().get("repo").equals("starred"))
+                repositoryListFragment.changeToOwn();
             return;
         }
 
@@ -173,10 +172,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadFragmentRepo(Bundle bundle){
-        repositoryFragment.setArguments(bundle);
+        repositoryListFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_fragment_container,repositoryFragment);
+        transaction.replace(R.id.main_fragment_container, repositoryListFragment);
         transaction.commit();
     }
 

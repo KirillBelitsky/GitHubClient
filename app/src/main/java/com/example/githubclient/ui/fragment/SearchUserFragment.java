@@ -70,12 +70,6 @@ public class SearchUserFragment extends Fragment {
             }
         });
 
-//        searchView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                searchView.setIconified(false);
-//            }
-//        });
     }
 
     private void loadUsers(String text){

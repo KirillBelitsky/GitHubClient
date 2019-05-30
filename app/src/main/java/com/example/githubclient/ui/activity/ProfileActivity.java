@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import com.example.githubclient.R;
 
 import com.example.githubclient.ui.fragment.ProfileFragment;
-import com.example.githubclient.ui.fragment.RepositoryFragment;
+import com.example.githubclient.ui.fragment.RepositoryListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +51,11 @@ public class ProfileActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         ProfileFragment profileFragment = new ProfileFragment();
         profileFragment.setArguments(bundle);
-        RepositoryFragment repositoryFragment = new RepositoryFragment();
-        repositoryFragment.setArguments(bundle);
+        RepositoryListFragment repositoryListFragment = new RepositoryListFragment();
+        repositoryListFragment.setArguments(bundle);
 
         adapter.addFrag(profileFragment, "Profile");
-        adapter.addFrag(repositoryFragment, "Repositories");
+        adapter.addFrag(repositoryListFragment, "Repositories");
         viewPager.setAdapter(adapter);
     }
 
