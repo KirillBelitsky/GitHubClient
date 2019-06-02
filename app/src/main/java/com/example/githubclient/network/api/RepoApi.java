@@ -21,7 +21,11 @@ public interface RepoApi {
     @GET("/user/repos")
     Call<List<Repository>> getOwnRepositories(@Header("Authorization") String token);
 
-    @GET("/repos/{login}/{repo}/contents/")
-    Call<List<RepositoryFile>> getRepoFiles(@Path("login") String login, @Path("repo") String repo);
+    @GET("/repos/{login}/{repo}/contents/{path}")
+    Call<List<RepositoryFile>> getRepoFiles(@Path("login") String login, @Path("repo") String repo,
+                                            @Path("path") String path);
+
+    @GET("{fileDownloadPath}")
+    Call<String> getFileContent(@Path("fileDownloadPath") String path);
 }
 
