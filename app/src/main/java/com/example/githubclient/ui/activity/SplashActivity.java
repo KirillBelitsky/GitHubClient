@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.githubclient.network.session.UserSession;
 
+import io.github.kbiakov.codeview.classifier.CodeProcessor;
+
+
 public class SplashActivity extends AppCompatActivity {
 
     private UserSession userSession;
@@ -15,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(bundle);
 
         userSession = new UserSession(this.getApplicationContext());
+        CodeProcessor.init(this);
 
         process();
     }

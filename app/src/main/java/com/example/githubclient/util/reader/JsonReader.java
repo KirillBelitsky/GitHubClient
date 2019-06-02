@@ -15,6 +15,7 @@ public class JsonReader {
             String line = "";
             while ((line = reader.readLine()) != null) {
                 response.append(line);
+                response.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();

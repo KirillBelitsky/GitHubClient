@@ -1,5 +1,6 @@
 package com.example.githubclient.network.service;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.githubclient.network.response.AsyncResponse;
@@ -14,29 +15,31 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public class UserService extends AsyncTask<String, Void, String> {
+public class CodeLoader extends AsyncTask<String, Void, String> {
 
-    private String json;
-    public static final String GET_USER = "https://api.github.com/users/%s";
-    public AsyncResponse delegate = null;
+    private String content = null;
+    public AsyncResponse delegate;
+
+    public CodeLoader(AsyncResponse delegate){
+        this.delegate = delegate;
+    }
 
     @Override
     protected String doInBackground(String... strings) {
         URL url;
         HttpURLConnection urlConnection = null;
-        String urlFormat = String.format(GET_USER,strings[0]);
+        String urlFormat = strings[0];
 
         try {
-
             url = new URL(urlFormat);
             urlConnection = (HttpURLConnection) url.openConnection();
 
             int responseCode = urlConnection.getResponseCode();
-
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                json = JsonReader.readStream(urlConnection.getInputStream());
-                return json;
+               content = JsonReader.readStream(urlConnection.getInputStream());
             }
+
+            return content;
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -50,8 +53,8 @@ public class UserService extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        delegate.processFinish(result);
+    protected void onPostExecute(String content) {
+        delegate.processFinish(content);
     }
 
 }

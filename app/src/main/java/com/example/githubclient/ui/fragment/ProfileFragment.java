@@ -102,10 +102,11 @@ public class ProfileFragment extends Fragment {
 
         NetworkService.getInstance()
                 .getUserApi()
-                .getUserByLogin(getArguments().get(LOGIN).toString())
+                .getUserByLogin(getArguments().getString(LOGIN))
                 .enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
+
                         Picasso.with(getContext()).load(response.body().getAvatarUrl()).transform(new CircularTransformation()).into(profileImage);
 
                         login.setText(response.body().getLogin());
