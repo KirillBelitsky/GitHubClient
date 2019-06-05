@@ -25,7 +25,7 @@ public interface RepoApi {
     Call<List<RepositoryFile>> getRepoFiles(@Path("login") String login, @Path("repo") String repo,
                                             @Path("path") String path);
 
-    @GET("{fileDownloadPath}")
-    Call<String> getFileContent(@Path("fileDownloadPath") String path);
+    @GET("/repos/{login}/{repo}")
+    Call<Repository> getRepository(@Path("login") String login, @Path("repo") String repo);
 }
 

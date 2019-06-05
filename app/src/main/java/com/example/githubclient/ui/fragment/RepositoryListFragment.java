@@ -81,6 +81,8 @@ public class RepositoryListFragment extends Fragment {
                             @Override
                             public void onItemClick(Repository item) {
                                 Intent intent = new Intent(getActivity(),RepositoryActivity.class);
+                                intent.putExtra(LOGIN,item.getOwner().getLogin());
+                                intent.putExtra(REPOSITORY,item.getName());
                                 startActivity(intent);
                             }
                         });

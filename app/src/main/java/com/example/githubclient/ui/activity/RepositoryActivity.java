@@ -39,6 +39,7 @@ public class RepositoryActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        this.setTitle(getIntent().getStringExtra(REPOSITORY));
     }
 
     @Override
@@ -56,12 +57,10 @@ public class RepositoryActivity extends AppCompatActivity {
         RepositoryInfoFragment repoInfoFragment = new RepositoryInfoFragment();
         RepositoryFilesFragment repoFilesFragment = new RepositoryFilesFragment();
 
-        System.out.println(getIntent().getStringExtra(LOGIN));
-        System.out.println(getIntent().getStringExtra(REPOSITORY));
-
         bundle.putString(LOGIN,getIntent().getStringExtra(LOGIN));
         bundle.putString(REPOSITORY,getIntent().getStringExtra(REPOSITORY));
         repoFilesFragment.setArguments(bundle);
+        repoInfoFragment.setArguments(bundle);
 
         adapter.addFrag(repoInfoFragment, "Info");
         adapter.addFrag(repoFilesFragment, "Files");

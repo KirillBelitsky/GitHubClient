@@ -38,14 +38,6 @@
         android:id="@+id/add_info"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_menu_settings"
-            android:title="@string/nav_settings" />
-        <item
-            android:id="@+id/about"
-            android:icon="@drawable/ic_menu_about"
-            android:title="@string/nav_about" />
-        <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_logout"
             android:title="@string/logout" />

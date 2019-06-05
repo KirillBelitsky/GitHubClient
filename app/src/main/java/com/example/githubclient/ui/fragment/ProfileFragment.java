@@ -106,28 +106,30 @@ public class ProfileFragment extends Fragment {
                 .enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
+                        if(response.body()!=null){
 
-                        Picasso.with(getContext()).load(response.body().getAvatarUrl()).transform(new CircularTransformation()).into(profileImage);
+                            Picasso.with(getContext()).load(response.body().getAvatarUrl()).transform(new CircularTransformation()).into(profileImage);
 
-                        login.setText(response.body().getLogin());
-                        name.setText(response.body().getName());
-                        createdAt.append(" " + format.format(response.body().getDate()));
-                        followers.setText(String.valueOf(response.body().getFollowers()));
-                        following.setText(String.valueOf(response.body().getFollowing()));
+                            login.setText(response.body().getLogin());
+                            name.setText(response.body().getName());
+                            createdAt.append(" " + format.format(response.body().getDate()));
+                            followers.setText(String.valueOf(response.body().getFollowers()));
+                            following.setText(String.valueOf(response.body().getFollowing()));
 
-                        if (response.body().getEmail() == null) {
-                            emailHeader.setVisibility(View.GONE);
+                            if (response.body().getEmail() == null) {
+                                emailHeader.setVisibility(View.GONE);
+                            }
+                            else email.setText(response.body().getEmail()
+                            );
+
+                            if (response.body().getCompany() == null) {
+                                companyHeader.setVisibility(View.GONE);
+                            }
+                            else company.setText(response.body().getCompany());
+
+                            progressBar.setVisibility(View.INVISIBLE);
+                            layout.setVisibility(View.VISIBLE);
                         }
-                        else email.setText(response.body().getEmail()
-                        );
-
-                        if (response.body().getCompany() == null) {
-                            companyHeader.setVisibility(View.GONE);
-                        }
-                        else company.setText(response.body().getCompany());
-
-                        progressBar.setVisibility(View.INVISIBLE);
-                        layout.setVisibility(View.VISIBLE);
                     }
 
                     @Override

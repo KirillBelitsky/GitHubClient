@@ -3,6 +3,8 @@ package com.example.githubclient.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Repository {
 
     @SerializedName("id")
@@ -28,6 +30,14 @@ public class Repository {
     @SerializedName("stargazers_count")
     @Expose
     private int starCount;
+
+    @SerializedName("created_at")
+    @Expose
+    private Date createdAt;
+
+    @SerializedName("updated_at")
+    @Expose
+    private Date updatedAt;
 
     @SerializedName("owner")
     @Expose
@@ -87,6 +97,22 @@ public class Repository {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override

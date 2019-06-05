@@ -1,6 +1,7 @@
 package com.example.githubclient.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -32,6 +33,9 @@ public class CodeViewActivity extends AppCompatActivity  implements AsyncRespons
 
         this.progressBar = findViewById(R.id.code_view_progress_bar);
         this.mCodeView = (CodeView)findViewById(R.id.code_view);
+
+        this.mCodeView.setOptions(Options.Default.get(this));
+        this.mCodeView.getOptions().setTheme(ColorTheme.MONOKAI);
         this.delegate = this;
 
         new CodeLoader(delegate).execute(getIntent().getStringExtra("downloadUrl"));
@@ -40,9 +44,7 @@ public class CodeViewActivity extends AppCompatActivity  implements AsyncRespons
 
     @Override
     public void processFinish(String result) {
-        mCodeView.setOptions(Options.Default.get(this)
-                .withCode(result)
-                .withTheme(ColorTheme.MONOKAI));
+        this.mCodeView.setCode(result);
 
         this.progressBar.setVisibility(View.INVISIBLE);
         this.mCodeView.setVisibility(View.VISIBLE);

@@ -34,7 +34,14 @@
     <string name="username_invalid">Invalid username!</string>
     <string name="password_invalid">Invalid password!</string>
     <string name="profile_created_at">Created at </string>
+    <string name="profile_last_update">Updated at </string>
     <string name="back">Back</string>
+    <string name="owner">Owner:</string>
+    <string name="forks">Forks:</string>
+    <string name="watchers">Watchers:</string>
+    <string name="language">Language:</string>
+    <string name="stars">Stars:</string>
+    <string name="description">Description:</string>
 
 
 

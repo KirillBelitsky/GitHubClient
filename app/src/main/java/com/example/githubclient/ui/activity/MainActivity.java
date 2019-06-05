@@ -114,9 +114,6 @@ public class MainActivity extends AppCompatActivity
                 starredRepo();
                 break;
 
-            case R.id.about:
-                break;
-
             case R.id.logout:
                 userSession.invalidate();
                 startActivity(new Intent(this, SplashActivity.class));
