@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.githubclient.R;
 import com.example.githubclient.model.RepositoryFile;
@@ -18,6 +19,7 @@ import com.example.githubclient.ui.activity.CodeViewActivity;
 import com.example.githubclient.ui.adapter.RepositoryFileAdapter;
 import com.example.githubclient.ui.adapter.listener.OnItemClickListener;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -35,6 +37,8 @@ public class RepositoryFilesFragment extends Fragment{
     private LinearLayoutManager layoutManager;
     private List<RepositoryFile> files;
     private String path = "";
+    private String currentFolder = "";
+    private ArrayList<String> list;
 
     @Nullable
     @Override
@@ -42,6 +46,7 @@ public class RepositoryFilesFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_repo_files,container,false);
 
         layoutManager = new LinearLayoutManager(getActivity());
+        list = new ArrayList<>();
 
         loadData(path);
 
@@ -51,6 +56,19 @@ public class RepositoryFilesFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.recycler_view_repo_files);
+        Button button = view.findViewById(R.id.buttonBack);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(list == null || list.size() == 0)
+                    return;
+
+                currentFolder = list.get(list.size() - 1);
+                loadData(list.get(list.size() - 1));
+                list.remove(list.size() - 1);
+            }
+        });
     }
 
     private void loadData(final String path){
@@ -86,7 +104,11 @@ public class RepositoryFilesFragment extends Fragment{
                                         intent.putExtra("title",item.getName());
                                         startActivity(intent);
                                     }
-                                    else loadData(item.getPath());
+                                    else {
+                                        loadData(item.getPath());
+                                        list.add(currentFolder);
+                                        currentFolder = item.getPath();
+                                    }
                                 }
                             }));
                         }
@@ -98,5 +120,4 @@ public class RepositoryFilesFragment extends Fragment{
                     }
                 });
     }
-
 }

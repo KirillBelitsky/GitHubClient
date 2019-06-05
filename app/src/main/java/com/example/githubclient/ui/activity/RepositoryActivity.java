@@ -1,6 +1,5 @@
 package com.example.githubclient.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -55,7 +54,6 @@ public class RepositoryActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
 
         RepositoryInfoFragment repoInfoFragment = new RepositoryInfoFragment();
-
         RepositoryFilesFragment repoFilesFragment = new RepositoryFilesFragment();
 
         System.out.println(getIntent().getStringExtra(LOGIN));

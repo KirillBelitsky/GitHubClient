@@ -34,6 +34,7 @@
     <string name="username_invalid">Invalid username!</string>
     <string name="password_invalid">Invalid password!</string>
     <string name="profile_created_at">Created at </string>
+    <string name="back">Back</string>
 
 
 
